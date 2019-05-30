@@ -2,19 +2,23 @@ public class Game {
 
   private Grid grid;
   private int userRow;
+  private int userCol;
+
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
+  private String userPic = "user.gif";
   
   public Game() {
 
     grid = new Grid(5, 10);
     userRow = 3;
+    userCol = 0;
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
     updateTitle();
-    grid.setImage(new Location(userRow, 0), "user.gif");
+    grid.setImage(new Location(userRow, userCol), userPic);
   }
   
   public void play() {
@@ -43,14 +47,16 @@ public class Game {
 
         //change the field for userrow
 
+        Location oldLoc = new Location(userRow, userCol);
+        grid.setImage(oldLoc, null);
+
         userRow--;
 
         //shift the user picture up in the array
-        Location loc = new Location(userRow, 0);
+        Location loc = new Location(userRow, userCol);
         grid.setImage(loc, "user.gif");
         
-        Location oldLoc = new Location(userRow+1, 0);
-        grid.setImage(oldLoc, null);
+ 
 
   }
     //if I push down arrow, then plane goes down
