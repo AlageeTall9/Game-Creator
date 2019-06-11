@@ -73,7 +73,13 @@ public class Game {
   }
   
   public void handleCollision(Location loc) {
+    if(grid.getImage(loc)==null);
+      
 
+  }
+   if( grid.getImage(loc)==)
+  
+    
   }
   
   public int getScore() {
