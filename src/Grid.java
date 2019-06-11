@@ -49,6 +49,7 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 		setBackground(imageName);
 
 	}
+	
 	public Grid(String imageFileName)
 	{
 		BufferedImage image = loadImage(imageFileName);
