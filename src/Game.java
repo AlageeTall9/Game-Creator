@@ -7,12 +7,12 @@ public class Game {
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
-  private String userPic = "user.gif";
+  private String userPic = "naruto.jpg";
   private int health = 1;
   
   public Game() {
 
-    grid = new Grid(5, 10, "forest.jpg");
+    grid = new Grid(5, 10, "game-forest-background-5.jpg");
     userRow = 4;
     userCol = (int) (Math.random()*5 + 1);
     msElapsed = 0;
@@ -40,7 +40,7 @@ public class Game {
   }
 
   public void handleKeyPress(){
-
+   
     //check last key pressed
     int key = grid.checkLastKeyPressed();
     System.out.println(key);
@@ -62,7 +62,7 @@ public class Game {
 
         //shift the user picture up in the array
         Location loc = new Location(userRow, userCol);
-        grid.setImage(loc, "user.gif");
+        grid.setImage(loc, "naruto.jpg");
   
     }
  
@@ -96,12 +96,12 @@ public class Game {
       double usenUM = Math.random();
       if(usenUM <= 0.4){
         grid.setImage(a, "rock.png");
-      }
 
 
 
 
     }
+  }
 
 
   }
