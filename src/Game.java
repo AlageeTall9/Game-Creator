@@ -7,12 +7,12 @@ public class Game {
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
-  private String userPic = "naruto.jpg";
-  private int health = 1;
+  private String userPic = "user.gif";
+  private int health = 3;
   
   public Game() {
 
-    grid = new Grid(5, 10, "game-forest-background-5.jpg");
+    grid = new Grid(5, 10, "forest.jpg");
     userRow = 4;
     userCol = (int) (Math.random()*5 + 1);
     msElapsed = 0;
@@ -40,93 +40,97 @@ public class Game {
   }
 
   public void handleKeyPress(){
-   
+
     //check last key pressed
     int key = grid.checkLastKeyPressed();
     System.out.println(key);
 
-    //set "w" key to move the jummup
+    //set "up arrow" key to move the user
     if(key == 38){
-        //check case where out of bounds
-        
-         if(grid.getNumRows() < 0){
-          System.out.println("Can't jump");
-        }
-        
-        //change the field for userrow
-
-        Location oldLoc = new Location(userRow, userCol);
-        grid.setImage(oldLoc, null);
-
-        userRow--;
-
-        //shift the user picture up in the array
-        Location loc = new Location(userRow, userCol);
-        grid.setImage(loc, "naruto.jpg");
-  
-    }
- 
-    //if I push down arrow, then plane goes down
-        if(key == 40){
-          userRow++;
-        }
-      
-  
-        if(key == 37){
-          if(userCol > 0){
-            userCol--;
-          }
-          else{
-            userCol += 0;
-          }
-        }
+      //check case where out of bounds
      
+      if(grid.getNumRows() < 0){
+        System.out.println("Can't jump!");
+      }
+        
+      //change the field for userrow
 
+      Location oldLoc = new Location(userRow, userCol);
+      grid.setImage(oldLoc, null);
 
-  }
+      userRow--;
 
-  
-  
-  public void populateRightEdge(){
-    
-    for(int i = 0; i < grid.getNumRows(); i++){ 
-
-      Location a = new Location(i, grid.getNumCols()-1);
-
-      double usenUM = Math.random();
-      if(usenUM <= 0.4){
-        grid.setImage(a, "rock.png");
-
-
-
-
+      //shift the user picture up in the array
+      if(userRow > 0){
+        Location loc = new Location(userRow, userCol);
+        grid.setImage(loc, "user.gif");
     }
   }
-
-
+    //if I push down arrow, then plane goes down
+    if(key == 40){
+      userRow++;
+    }       
+    if(key ==   37){
+      if(userCol > 0){
+        Location loc = new Location(userRow, userCol);
+        grid.setImage(loc, "user.gif");
+        userCol--;
+      }
+      else{
+        userCol += 0;
+      }
+    }
+  }
+  public void populateRightEdge(){
+    for(int i = 0; i < grid.getNumRows(); i++){ 
+    Location a = new Location(i, grid.getNumCols()-1);
+      double usenUM = Math.random();
+      if(usenUM <= 0.05){
+        grid.setImage(a, "rock.png");
+      }
+    }
   }
   
   public void moveRocks(){
+    for(int i = 0; i < grid.getNumRows(); i++){
+      for(int j = 1; j < grid.getNumCols(); j++){
 
- 
- 
+        //grid[Math.Random()*getNumRows][j]= grid[i][j];
+
+        Location oldLoc = new Location(i, j);
+        Location newLoc = new Location(i, j - 1);
+      
+        if("rock.png".equals(grid.getImage(oldLoc))){  
+          grid.setImage(newLoc, "rock.png");
+          grid.setImage(oldLoc, null);
+        } 
+        
+       // handleCollision(newLoc);
+
+      
+  
+      }
+    }
  
   }
   
   public void handleCollision(Location loc) {
-    //if(grid.getImage(loc)==null);
-      
-
+     if(grid.getImage(loc)==null){
+     health=health;
+   }
+     if(grid.getImage(loc).equals("rock.png")){
+      timesAvoid++;
+      health-=1;
+   }
     
   }
-  // if( grid.getImage(loc)==)
   
     
   
   
   public int getScore() {
- return -1;
- }
+    return 1;
+  }
   
   public void updateTitle() {
     grid.setTitle("Game:  " + getScore());
@@ -140,9 +144,10 @@ public class Game {
       return false;
     }
   }
-    
-  public static void main(String[] args) { 
+
+  public static void main(String[] args) {
     Game game = new Game();
-    game.play();   
+    game.play();
+    game.moveRocks();
   }
 }
